@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Floating Navigation</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { 
+    font-family: 'Inter', sans-serif; 
+    line-height: 1.6;
+    color: #1e293b;
+  }
+  
+  /* Hero Section */
+  .hero {
+    height: 100vh;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Content Sections */
+  section {
+    padding: 5rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  section h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #1e293b;
+  }
+  
+  section p {
+    margin-bottom: 1.5rem;
+    color: #475569;
+    line-height: 1.8;
+  }
+  
+  /* Floating Navigation */
+  .floating-nav {
+    position: fixed;
+    top: -100px;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s ease, top 0.3s ease;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+  }
+  
+  .floating-nav.visible {
+    top: 0;
+  }
+  
+  .floating-nav.hidden {
+    transform: translateY(-100%);
+  }
+  
+  .nav-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #4f46e5;
+    text-decoration: none;
+  }
+  
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+  }
+  
+  .nav-links a {
+    color: #334155;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+    position: relative;
+    padding: 0.5rem 0;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #4f46e5;
+    transition: width 0.3s ease;
+  }
+  
+  .nav-links a:hover::after {
+    width: 100%;
+  }
+  
+  .nav-links a:hover {
+    color: #4f46e5;
+  }
+  
+  .cta-button {
+    background: #4f46e5;
+    color: white !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 0.375rem;
+    transition: background 0.2s, transform 0.2s;
+  }
+  
+  .cta-button::after {
+    display: none;
+  }
+  
+  .cta-button:hover {
+    background: #4338ca;
+    transform: translateY(-2px);
+  }
+  
+  /* Mobile Menu */
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #334155;
+  }
+  
+  @media (max-width: 768px) {
+    .nav-links {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      right: 0;
+      background: white;
+      flex-direction: column;
+      padding: 1rem 0;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    
+    .nav-links.active {
+      max-height: 100vh;
+      padding: 1rem 2rem;
+    }
+    
+    .menu-toggle {
+      display: block;
+    }
+    
+    .nav-item {
+      padding: 0.5rem 0;
+    }
+  }
+</style>
+</head>
+<body>
+  <!-- Floating Navigation -->
+  <nav class="floating-nav" id="floatingNav">
+    <a href="#" class="nav-logo">FloatNav</a>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li class="nav-item"><a href="#home">Home</a></li>
+      <li class="nav-item"><a href="#features">Features</a></li>
+      <li class="nav-item"><a href="#about">About</a></li>
+      <li class="nav-item"><a href="#contact">Contact</a></li>
+      <li class="nav-item"><a href="#" class="cta-button">Get Started</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Welcome to FloatNav</h1>
+      <p>Scroll down to see the floating navigation in action</p>
+    </div>
+  </section>
+
+  <!-- Content Sections -->
+  <section id="features">
+    <h2>Features</h2>
+    <p>This floating navigation appears when you start scrolling down and hides when scrolling up. It provides easy access to navigation without taking up space when not needed.</p>
+    <p>The navigation is fully responsive and includes a mobile menu for smaller screens.</p>
+  </section>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>We create beautiful, user-friendly navigation components that enhance the user experience on your website.</p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Get in touch with us to learn more about our navigation solutions.</p>
+  </section>
+
+  <script>
+    // Floating Nav Logic
+    const floatingNav = document.getElementById('floatingNav');
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    let lastScroll = 0;
+    
+    // Show/hide nav on scroll
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      
+      if (currentScroll <= 0) {
+        floatingNav.classList.remove('visible');
+        return;
+      }
+      
+      if (currentScroll > lastScroll && !floatingNav.classList.contains('hidden')) {
+        // Scrolling down
+        floatingNav.classList.add('hidden');
+      } else if (currentScroll < lastScroll && floatingNav.classList.contains('hidden')) {
+        // Scrolling up
+        floatingNav.classList.remove('hidden');
+        floatingNav.classList.add('visible');
+      }
+      
+      lastScroll = currentScroll;
+    });
+    
+    // Mobile menu toggle
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+    
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>

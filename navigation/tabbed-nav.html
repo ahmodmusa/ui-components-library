@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tabbed Navigation</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.6;
+    padding: 2rem;
+  }
+  .tab-nav {
+    display: flex;
+    border-bottom: 2px solid #e5e7eb;
+    background: #fff;
+    border-radius: 8px 8px 0 0;
+    overflow-x: auto;
+    box-shadow: 0 2px 8px 0 rgba(31,41,55,0.04);
+    margin-bottom: 2rem;
+  }
+  .tab-link {
+    padding: 1rem 2rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    color: #64748b;
+    font-weight: 500;
+    transition: color 0.2s, border-bottom 0.2s;
+    border-bottom: 3px solid transparent;
+  }
+  .tab-link.active {
+    color: #4f46e5;
+    border-bottom: 3px solid #4f46e5;
+    background: #f3f4f6;
+  }
+  .tab-content {
+    display: none;
+    padding: 2rem 1rem;
+    background: #fff;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 2px 8px 0 rgba(31,41,55,0.04);
+    min-height: 120px;
+  }
+  .tab-content.active {
+    display: block;
+  }
+</style>
+</head>
+<body>
+  <nav class="tab-nav">
+    <button class="tab-link active" data-tab="tab1">Home</button>
+    <button class="tab-link" data-tab="tab2">Profile</button>
+    <button class="tab-link" data-tab="tab3">Settings</button>
+    <button class="tab-link" data-tab="tab4">About</button>
+  </nav>
+  <div class="tab-content active" id="tab1">
+    <h2>Home</h2>
+    <p>Welcome to the home tab. This is a modern tabbed navigation example.</p>
+  </div>
+  <div class="tab-content" id="tab2">
+    <h2>Profile</h2>
+    <p>Here is your profile information. You can put any content here.</p>
+  </div>
+  <div class="tab-content" id="tab3">
+    <h2>Settings</h2>
+    <p>Adjust your preferences and settings in this tab.</p>
+  </div>
+  <div class="tab-content" id="tab4">
+    <h2>About</h2>
+    <p>This is a simple, clean tabbed navigation UI component.</p>
+  </div>
+<script>
+  const tabLinks = document.querySelectorAll('.tab-link');
+  const tabContents = document.querySelectorAll('.tab-content');
+  tabLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      tabLinks.forEach(l => l.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+      link.classList.add('active');
+      document.getElementById(link.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

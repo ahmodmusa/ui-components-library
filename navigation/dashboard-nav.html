@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Navigation</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    min-height: 100vh;
+    display: flex;
+  }
+  .sidebar {
+    width: 260px;
+    background: #fff;
+    border-right: 1px solid #e5e7eb;
+    min-height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+  }
+  .sidebar-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #4f46e5;
+  }
+  .sidebar-nav {
+    flex: 1;
+    padding: 1rem 0;
+  }
+  .nav-section {
+    margin-bottom: 1.5rem;
+  }
+  .nav-section-title {
+    padding: 0.5rem 1.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .nav-menu {
+    list-style: none;
+  }
+  .menu-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    color: #1f2937;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: background 0.2s, color 0.2s, border-left 0.2s;
+    gap: 0.75rem;
+    font-weight: 500;
+  }
+  .menu-link:hover, .menu-link.active {
+    background: #eef2ff;
+    color: #4f46e5;
+    border-left: 3px solid #4f46e5;
+  }
+  .main-content {
+    flex: 1;
+    margin-left: 260px;
+    padding: 2rem;
+  }
+  @media (max-width: 900px) {
+    .sidebar { width: 70px; }
+    .sidebar-header { font-size: 1rem; padding: 1rem; }
+    .main-content { margin-left: 70px; }
+    .nav-section-title { display: none; }
+    .menu-link span { display: none; }
+    .menu-link { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header">Dashboard</div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">Main</div>
+        <ul class="nav-menu">
+          <li><a href="#" class="menu-link active">Overview</a></li>
+          <li><a href="#" class="menu-link">Analytics</a></li>
+          <li><a href="#" class="menu-link">Projects</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Account</div>
+        <ul class="nav-menu">
+          <li><a href="#" class="menu-link">Profile</a></li>
+          <li><a href="#" class="menu-link">Settings</a></li>
+        </ul>
+      </div>
+    </nav>
+  </aside>
+  <main class="main-content">
+    <h1>Dashboard Main Content</h1>
+    <p>This is the dashboard navigation example. The sidebar is collapsible and responsive.</p>
+  </main>
+</body>
+</html>
