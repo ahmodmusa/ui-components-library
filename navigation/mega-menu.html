@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mega Menu Navigation</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #f8fafc; }
+  .navbar { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); position: relative; z-index: 100; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+  .nav-container { display: flex; justify-content: space-between; align-items: center; height: 70px; }
+  .logo { font-size: 1.5rem; font-weight: 700; color: #2563eb; text-decoration: none; }
+  .nav-links { display: flex; list-style: none; }
+  .nav-item { position: relative; }
+  .nav-link { 
+    padding: 1rem 1.25rem; 
+    color: #1e293b; 
+    text-decoration: none; 
+    font-weight: 500; 
+    display: flex; 
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: #2563eb; }
+  .mega-menu { 
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    background: white;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    padding: 2rem;
+    display: none;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    border-top: 1px solid #e2e8f0;
+  }
+  .nav-item:hover .mega-menu { display: grid; }
+  .mega-menu h3 { 
+    color: #334155;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .mega-links { list-style: none; }
+  .mega-links li { margin-bottom: 0.75rem; }
+  .mega-links a { 
+    color: #475569; 
+    text-decoration: none;
+    transition: color 0.2s;
+    display: block;
+    padding: 0.25rem 0;
+  }
+  .mega-links a:hover { color: #2563eb; }
+  .menu-toggle { display: none; }
+  
+  @media (max-width: 1024px) {
+    .menu-toggle { 
+      display: block; 
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .nav-links {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      right: 0;
+      background: white;
+      flex-direction: column;
+      padding: 1rem 0;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .nav-links.active {
+      max-height: 100vh;
+      overflow-y: auto;
+    }
+    .nav-item { width: 100%; }
+    .nav-link { padding: 0.75rem 1.5rem; }
+    .mega-menu {
+      position: static;
+      display: none !important;
+      padding: 0 1.5rem;
+      box-shadow: none;
+    }
+    .mega-menu.active { 
+      display: block !important;
+      padding: 1rem 1.5rem;
+      background: #f8fafc;
+    }
+  }
+</style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-container">
+        <a href="#" class="logo">MegaMenu</a>
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <ul class="nav-links" id="navLinks">
+          <li class="nav-item">
+            <a href="#" class="nav-link">Products</a>
+            <div class="mega-menu">
+              <div class="mega-column">
+                <h3>Category 1</h3>
+                <ul class="mega-links">
+                  <li><a href="#">Link 1</a></li>
+                  <li><a href="#">Link 2</a></li>
+                  <li><a href="#">Link 3</a></li>
+                </ul>
+              </div>
+              <div class="mega-column">
+                <h3>Category 2</h3>
+                <ul class="mega-links">
+                  <li><a href="#">Link 4</a></li>
+                  <li><a href="#">Link 5</a></li>
+                  <li><a href="#">Link 6</a></li>
+                </ul>
+              </div>
+              <div class="mega-column">
+                <h3>Category 3</h3>
+                <ul class="mega-links">
+                  <li><a href="#">Link 7</a></li>
+                  <li><a href="#">Link 8</a></li>
+                  <li><a href="#">Link 9</a></li>
+                </ul>
+              </div>
+              <div class="mega-column">
+                <h3>Category 4</h3>
+                <ul class="mega-links">
+                  <li><a href="#">Link 10</a></li>
+                  <li><a href="#">Link 11</a></li>
+                  <li><a href="#">Link 12</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Solutions</a>
+            <div class="mega-menu">
+              <div class="mega-column">
+                <h3>By Industry</h3>
+                <ul class="mega-links">
+                  <li><a href="#">Healthcare</a></li>
+                  <li><a href="#">Finance</a></li>
+                  <li><a href="#">Education</a></li>
+                </ul>
+              </div>
+              <div class="mega-column">
+                <h3>By Role</h3>
+                <ul class="mega-links">
+                  <li><a href="#">Developers</a></li>
+                  <li><a href="#">Designers</a></li>
+                  <li><a href="#">Marketers</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">Resources</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">Company</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Toggle mobile submenus
+    const navItems = document.querySelectorAll('.nav-item');
+    
+    navItems.forEach(item => {
+      const link = item.querySelector('.nav-link');
+      const megaMenu = item.querySelector('.mega-menu');
+      
+      if (megaMenu) {
+        link.addEventListener('click', (e) => {
+          if (window.innerWidth <= 1024) {
+            e.preventDefault();
+            megaMenu.classList.toggle('active');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
