@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Icon Navigation</title>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<style>
+  :root {
+    --primary: #4f46e5;
+    --primary-light: #eef2ff;
+    --text: #1f2937;
+    --text-light: #6b7280;
+    --bg: #ffffff;
+    --border: #e5e7eb;
+    --radius: 0.75rem;
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    --transition: all 0.2s ease;
+  }
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #f9fafb;
+    padding: 2rem;
+    color: var(--text);
+  }
+  
+  .container { max-width: 1000px; margin: 0 auto; }
+  .section { margin-bottom: 2.5rem; }
+  h2 { margin-bottom: 1rem; color: var(--text); }
+  p { color: var(--text-light); margin-bottom: 1.5rem; }
+  
+  /* Base Icon Navigation */
+  .icon-nav {
+    display: flex;
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  
+  .icon-nav-item {
+    flex: 1;
+    text-align: center;
+    padding: 1rem 0.5rem;
+    text-decoration: none;
+    color: var(--text-light);
+    transition: var(--transition);
+    position: relative;
+  }
+  
+  .icon-nav-item:hover {
+    background: rgba(79, 70, 229, 0.05);
+    color: var(--primary);
+  }
+  
+  .icon-nav-item.active {
+    color: var(--primary);
+  }
+  
+  .icon-nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 3px 3px 0 0;
+  }
+  
+  .icon-wrapper {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-light);
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+    transition: var(--transition);
+  }
+  
+  .icon-nav-item:hover .icon-wrapper,
+  .icon-nav-item.active .icon-wrapper {
+    background: var(--primary);
+    color: white;
+  }
+  
+  .icon-nav-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  
+  /* Badge */
+  .icon-badge {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    background: #ef4444;
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 600;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+  }
+  
+  /* Vertical Variant */
+  .icon-nav-vertical {
+    flex-direction: column;
+    max-width: 80px;
+    padding: 1rem 0;
+  }
+  
+  .icon-nav-vertical .icon-nav-item {
+    padding: 1rem 0;
+  }
+  
+  .icon-nav-vertical .icon-nav-item.active::after {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 20px;
+    border-radius: 0 3px 3px 0;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .icon-nav {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .icon-nav-item {
+      min-width: 80px;
+    }
+    
+    .icon-nav-vertical {
+      max-width: 100%;
+      flex-direction: row;
+      padding: 0;
+    }
+    
+    .icon-nav-vertical .icon-nav-item {
+      padding: 0.75rem 0.5rem;
+    }
+    
+    .icon-nav-vertical .icon-nav-item.active::after {
+      left: 0;
+      top: auto;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 3px;
+      border-radius: 3px 3px 0 0;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header class="section">
+      <h1>Icon Navigation</h1>
+      <p>Clean, modern navigation using icons with intuitive interactions.</p>
+    </header>
+    
+    <section class="section">
+      <h2>Horizontal Icon Navigation</h2>
+      <p>Perfect for bottom navigation or top bars.</p>
+      
+      <div class="icon-nav" id="horizontalNav">
+        <a href="#" class="icon-nav-item active" data-tab="home">
+          <div class="icon-wrapper">
+            <span class="material-icons-round">home</span>
+          </div>
+          <span class="icon-nav-label">Home</span>
+        </a>
+        
+        <a href="#" class="icon-nav-item" data-tab="search">
+          <div class="icon-wrapper">
+            <span class="material-icons-round">search</span>
+          </div>
+          <span class="icon-nav-label">Search</span>
+        </a>
+        
+        <a href="#" class="icon-nav-item" data-tab="notifications">
+          <div class="icon-wrapper">
+            <span class="material-icons-round">notifications</span>
+            <span class="icon-badge">3</span>
+          </div>
+          <span class="icon-nav-label">Alerts</span>
+        </a>
+        
+        <a href="#" class="icon-nav-item" data-tab="messages">
+          <div class="icon-wrapper">
+            <span class="material-icons-round">chat_bubble</span>
+            <span class="icon-badge">5</span>
+          </div>
+          <span class="icon-nav-label">Messages</span>
+        </a>
+        
+        <a href="#" class="icon-nav-item" data-tab="profile">
+          <div class="icon-wrapper">
+            <span class="material-icons-round">person</span>
+          </div>
+          <span class="icon-nav-label">Profile</span>
+        </a>
+      </div>
+    </section>
+    
+    <section class="section">
+      <h2>Vertical Icon Navigation</h2>
+      <p>Ideal for sidebars and dashboards.</p>
+      
+      <div class="icon-nav icon-nav-vertical" id="verticalNav">
+        <a href="#" class="icon-nav-item active" data-tab="dashboard">
+          <div class="icon-wrapper">
+            <span class="material-icons-round">dashboard</span>
+          </div>
+          <span class="icon-nav-label">Dashboard</span>
+        </a>
+        
+        <a href="#" class="icon-nav-item" data-tab="analytics">
+          <div class="icon-wrapper">
+            <span class="material-icons-round">insights</span>
+          </div>
+          <span class="icon-nav-label">Analytics</span>
+        </a>
+        
+        <a href="#" class="icon-nav-item" data-tab="settings">
+          <div class="icon-wrapper">
+            <span class="material-icons-round">settings</span>
+          </div>
+          <span class="icon-nav-label">Settings</span>
+        </a>
+        
+        <a href="#" class="icon-nav-item" data-tab="help">
+          <div class="icon-wrapper">
+            <span class="material-icons-round">help_outline</span>
+          </div>
+          <span class="icon-nav-label">Help</span>
+        </a>
+      </div>
+    </section>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Handle navigation clicks
+      const setupNav = (navId) => {
+        const nav = document.getElementById(navId);
+        if (!nav) return;
+        
+        const items = nav.querySelectorAll('.icon-nav-item');
+        
+        items.forEach(item => {
+          item.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Remove active class from all items in this nav
+            items.forEach(i => i.classList.remove('active'));
+            
+            // Add active class to clicked item
+            item.classList.add('active');
+            
+            // In a real app, you would load content here based on data-tab
+            console.log('Navigated to:', item.dataset.tab);
+          });
+        });
+      };
+      
+      // Initialize both navigation components
+      setupNav('horizontalNav');
+      setupNav('verticalNav');
+    });
+  </script>
+</body>
+</html>
