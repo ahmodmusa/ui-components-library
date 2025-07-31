@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Step Wizard Navigation</title>
+<style>
+  /* Reset & Base Styles */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --primary: #4f46e5;
+    --primary-light: #eef2ff;
+    --success: #10b981;
+    --text: #1f2937;
+    --text-light: #6b7280;
+    --bg: #ffffff;
+    --border: #e5e7eb;
+    --radius: 0.5rem;
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+  }
+  
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.5;
+    color: var(--text);
+    background-color: #f9fafb;
+    padding: 2rem;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Step Wizard */
+  .wizard {
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  
+  .wizard-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .wizard-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding: 2rem 3rem;
+    counter-reset: step;
+  }
+  
+  .wizard-steps::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--border);
+    z-index: 1;
+  }
+  
+  .wizard-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+  
+  .wizard-step:not(:last-child) {
+    margin-right: 1rem;
+  }
+  
+  .step-number {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+    position: relative;
+    transition: var(--transition);
+  }
+  
+  .wizard-step.active .step-number {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--primary-light);
+  }
+  
+  .wizard-step.completed .step-number {
+    background: var(--success);
+    border-color: var(--success);
+    color: white;
+  }
+  
+  .wizard-step.completed .step-number::after {
+    content: '✓';
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+  
+  .step-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-light);
+    text-align: center;
+    transition: var(--transition);
+  }
+  
+  .wizard-step.active .step-label,
+  .wizard-step.completed .step-label {
+    color: var(--text);
+    font-weight: 500;
+  }
+  
+  .wizard-content {
+    padding: 2rem;
+    min-height: 300px;
+  }
+  
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+  
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--text);
+    background-color: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  
+  .form-control:focus {
+    border-color: var(--primary);
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.25);
+  }
+  
+  .form-check {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .form-check-input {
+    margin-right: 0.5rem;
+  }
+  
+  .form-text {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.8125rem;
+    color: var(--text-light);
+  }
+  
+  .text-muted {
+    color: var(--text-light);
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .wizard-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  
+  .btn {
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    font-size: 0.9375rem;
+  }
+  
+  .btn-primary {
+    background: var(--primary);
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background: #4338ca;
+  }
+  
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  
+  .btn-outline:hover {
+    background: #f3f4f6;
+  }
+  
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 640px) {
+    .wizard-steps {
+      padding: 2rem 1rem;
+    }
+    
+    .step-label {
+      font-size: 0.75rem;
+    }
+    
+    .wizard-content {
+      padding: 1.5rem 1rem;
+    }
+    
+    .wizard-actions {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .wizard-actions .btn {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="wizard">
+      <div class="wizard-header">
+        <h2>Complete Your Profile</h2>
+        <p class="text-muted">Step <span id="currentStep">1</span> of <span id="totalSteps">4</span></p>
+      </div>
+      
+      <div class="wizard-steps">
+        <div class="wizard-step active" data-step="1">
+          <div class="step-number">1</div>
+          <div class="step-label">Account</div>
+        </div>
+        <div class="wizard-step" data-step="2">
+          <div class="step-number">2</div>
+          <div class="step-label">Profile</div>
+        </div>
+        <div class="wizard-step" data-step="3">
+          <div class="step-number">3</div>
+          <div class="step-label">Preferences</div>
+        </div>
+        <div class="wizard-step" data-step="4">
+          <div class="step-number">4</div>
+          <div class="step-label">Complete</div>
+        </div>
+      </div>
+      
+      <form id="wizardForm" class="wizard-content">
+        <div class="step-content active" data-step="1">
+          <h3>Account Information</h3>
+          <p class="text-muted">Please provide your basic account information to get started.</p>
+          
+          <div class="form-group" style="margin-top: 1.5rem;">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+          </div>
+          
+          <div class="form-group" style="margin-top: 1rem;">
+            <label for="password" class="form-label">Create Password</label>
+            <input type="password" id="password" class="form-control" placeholder="Create a strong password" required minlength="8">
+            <small class="form-text">Must be at least 8 characters long</small>
+          </div>
+          
+          <div class="form-group" style="margin-top: 1rem;">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm your password" required>
+          </div>
+        </div>
+        
+        <div class="step-content" data-step="2">
+          <h3>Profile Details</h3>
+          <p class="text-muted">Tell us more about yourself.</p>
+          
+          <div class="form-row" style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <div class="form-group" style="flex: 1;">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" id="firstName" class="form-control" placeholder="First name" required>
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" id="lastName" class="form-control" placeholder="Last name" required>
+            </div>
+          </div>
+          
+          <div class="form-group" style="margin-top: 1rem;">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="tel" id="phone" class="form-control" placeholder="+1 (___) ___-____">
+          </div>
+          
+          <div class="form-group" style="margin-top: 1rem;">
+            <label for="bio" class="form-label">Short Bio</label>
+            <textarea id="bio" class="form-control" rows="3" placeholder="Tell us about yourself"></textarea>
+          </div>
+        </div>
+        
+        <div class="step-content" data-step="3">
+          <h3>Preferences</h3>
+          <p class="text-muted">Customize your experience.</p>
+          
+          <div class="form-group" style="margin-top: 1.5rem;">
+            <label class="form-label">Communication Preferences</label>
+            <div class="form-check">
+              <input type="checkbox" id="emailUpdates" class="form-check-input" checked>
+              <label for="emailUpdates" class="form-check-label">Email me product updates and news</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" id="emailPromotions" class="form-check-input" checked>
+              <label for="emailPromotions" class="form-check-label">Send me special offers and promotions</label>
+            </div>
+          </div>
+          
+          <div class="form-group" style="margin-top: 1.5rem;">
+            <label for="timezone" class="form-label">Time Zone</label>
+            <select id="timezone" class="form-control">
+              <option value="">Select your timezone</option>
+              <option value="-12:00">(GMT-12:00) International Date Line West</option>
+              <option value="-08:00" selected>(GMT-08:00) Pacific Time (US & Canada)</option>
+              <option value="-05:00">(GMT-05:00) Eastern Time (US & Canada)</option>
+              <option value="+00:00">(GMT+00:00) London</option>
+              <option value="+01:00">(GMT+01:00) Berlin</option>
+              <option value="+08:00">(GMT+08:00) Singapore</option>
+            </select>
+          </div>
+          
+          <div class="form-group" style="margin-top: 1.5rem;">
+            <label class="form-label">Theme Preference</label>
+            <div class="form-check">
+              <input type="radio" id="themeLight" name="theme" value="light" class="form-check-input" checked>
+              <label for="themeLight" class="form-check-label">Light Theme</label>
+            </div>
+            <div class="form-check">
+              <input type="radio" id="themeDark" name="theme" value="dark" class="form-check-input">
+              <label for="themeDark" class="form-check-label">Dark Theme</label>
+            </div>
+            <div class="form-check">
+              <input type="radio" id="themeSystem" name="theme" value="system" class="form-check-input">
+              <label for="themeSystem" class="form-check-label">System Default</label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="step-content text-center" data-step="4" style="padding: 3rem 1rem;">
+          <div style="max-width: 400px; margin: 0 auto;">
+            <div style="width: 80px; height: 80px; background: #e3f9e5; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <h3>Setup Complete!</h3>
+            <p class="text-muted" style="margin: 1rem 0 2rem;">Your account has been created successfully. You can now start using our platform.</p>
+            <button type="button" class="btn btn-primary" id="getStartedBtn" style="min-width: 150px;">Get Started</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="wizard-actions">
+        <button class="btn btn-outline" id="prevBtn" disabled>Previous</button>
+        <button class="btn btn-primary" id="nextBtn">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('wizardForm');
+      const steps = document.querySelectorAll('.wizard-step');
+      const stepContents = document.querySelectorAll('.step-content');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const getStartedBtn = document.getElementById('getStartedBtn');
+      const currentStepEl = document.getElementById('currentStep');
+      const totalStepsEl = document.getElementById('totalSteps');
+      
+      let currentStep = 1;
+      const totalSteps = steps.length;
+      
+      // Set total steps
+      totalStepsEl.textContent = totalSteps;
+      
+      // Update UI based on current step
+      function updateUI() {
+        // Update step indicators
+        steps.forEach(step => {
+          const stepNum = parseInt(step.dataset.step);
+          
+          if (stepNum < currentStep) {
+            step.classList.add('completed');
+            step.classList.remove('active');
+          } else if (stepNum === currentStep) {
+            step.classList.add('active');
+            step.classList.remove('completed');
+          } else {
+            step.classList.remove('active', 'completed');
+          }
+        });
+        
+        // Update content
+        stepContents.forEach(content => {
+          content.classList.toggle('active', parseInt(content.dataset.step) === currentStep);
+        });
+        
+        // Update buttons
+        prevBtn.style.display = currentStep === 1 ? 'none' : 'block';
+        nextBtn.textContent = currentStep === totalSteps ? 'Finish' : 'Next';
+        currentStepEl.textContent = currentStep;
+      }
+      
+      // Form validation for current step
+      function validateStep(step) {
+        const currentContent = document.querySelector(`.step-content[data-step="${step}"]`);
+        const requiredFields = currentContent.querySelectorAll('[required]');
+        let isValid = true;
+        
+        requiredFields.forEach(field => {
+          if (!field.value.trim()) {
+            field.classList.add('is-invalid');
+            isValid = false;
+          } else {
+            field.classList.remove('is-invalid');
+          }
+        });
+        
+        // Special validation for password match
+        if (step === 1) {
+          const password = document.getElementById('password');
+          const confirmPassword = document.getElementById('confirmPassword');
+          
+          if (password.value !== confirmPassword.value) {
+            confirmPassword.setCustomValidity("Passwords don't match");
+            confirmPassword.classList.add('is-invalid');
+            isValid = false;
+          } else {
+            confirmPassword.setCustomValidity('');
+            confirmPassword.classList.remove('is-invalid');
+          }
+        }
+        
+        return isValid;
+      }
+      
+      // Next button click
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (!validateStep(currentStep)) {
+          return false;
+        }
+        
+        if (currentStep < totalSteps) {
+          // Hide current step content
+          document.querySelector(`.step-content[data-step="${currentStep}"]`).classList.remove('active');
+          
+          // Update current step
+          currentStep++;
+          
+          // Show next step content
+          document.querySelector(`.step-content[data-step="${currentStep}"]`).classList.add('active');
+          
+          // Update UI
+          updateUI();
+          
+          // Scroll to top of form on step change
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          
+          return false;
+        } else {
+          // Form submission
+          const formData = new FormData(form);
+          const formObject = {};
+          formData.forEach((value, key) => {
+            formObject[key] = value;
+          });
+          
+          // Here you would typically send the data to a server
+          console.log('Form submitted:', formObject);
+          
+          // Show success state
+          updateUI();
+          
+          return false;
+        }
+      });
+      
+      // Previous button click
+      prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (currentStep > 1) {
+          // Hide current step content
+          document.querySelector(`.step-content[data-step="${currentStep}"]`).classList.remove('active');
+          
+          // Update current step
+          currentStep--;
+          
+          // Show previous step content
+          document.querySelector(`.step-content[data-step="${currentStep}"]`).classList.add('active');
+          
+          // Update UI
+          updateUI();
+          
+          // Scroll to top of form on step change
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        return false;
+      });
+      
+      // Get Started button click (on final step)
+      if (getStartedBtn) {
+        getStartedBtn.addEventListener('click', () => {
+          // Redirect or perform final action
+          alert('Welcome! Your account is now ready to use.');
+        });
+      }
+      
+      // Initialize
+      updateUI();
+      
+      // Prevent form submission
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        return false;
+      });
+      
+      // Update form elements to prevent default form submission
+      document.querySelectorAll('input, button').forEach(el => {
+        if (el.type === 'submit' || el.type === 'button') {
+          el.addEventListener('click', (e) => {
+            if (e.target.closest('form')) {
+              e.preventDefault();
+            }
+          });
+        }
+      });
+      
+      // Real-time validation for password match
+      const password = document.getElementById('password');
+      const confirmPassword = document.getElementById('confirmPassword');
+      
+      if (password && confirmPassword) {
+        [password, confirmPassword].forEach(field => {
+          field.addEventListener('input', () => {
+            if (password.value && confirmPassword.value) {
+              if (password.value !== confirmPassword.value) {
+                confirmPassword.setCustomValidity("Passwords don't match");
+                confirmPassword.classList.add('is-invalid');
+              } else {
+                confirmPassword.setCustomValidity('');
+                confirmPassword.classList.remove('is-invalid');
+              }
+            }
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
