@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tabbed Navigation</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: #f9fafb; padding: 2rem; }
+  .container { max-width: 800px; margin: 0 auto; }
+  h1 { margin-bottom: 2rem; text-align: center; }
+  
+  /* Tabs */
+  .tabs { display: flex; background: white; border-radius: 0.5rem 0.5rem 0 0; overflow-x: auto; }
+  .tab { padding: 1rem 1.5rem; cursor: pointer; font-weight: 500; color: #6b7280; white-space: nowrap; position: relative; }
+  .tab:hover { color: #4f46e5; }
+  .tab.active { color: #4f46e5; border-bottom: 2px solid #4f46e5; }
+  .tab-content { background: white; border-radius: 0 0 0.5rem 0.5rem; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  .tab-pane { display: none; animation: fadeIn 0.3s ease; }
+  .tab-pane.active { display: block; }
+  
+  /* Animations */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    body { padding: 1rem; }
+    .tab { padding: 0.75rem 1rem; font-size: 0.875rem; }
+    .tab-content { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Tabbed Navigation</h1>
+    
+    <!-- Default Tabs -->
+    <div class="tabs" id="tabs1">
+      <div class="tab active" data-tab="tab1">Overview</div>
+      <div class="tab" data-tab="tab2">Features</div>
+      <div class="tab" data-tab="tab3">Pricing</div>
+    </div>
+    
+    <div class="tab-content" id="tabContent1">
+      <div class="tab-pane active" id="tab1">
+        <h2>Overview</h2>
+        <p>Welcome to our platform! This is a brief overview of what we offer.</p>
+      </div>
+      <div class="tab-pane" id="tab2">
+        <h2>Features</h2>
+        <p>Discover our powerful features designed to make your life easier.</p>
+      </div>
+      <div class="tab-pane" id="tab3">
+        <h2>Pricing</h2>
+        <p>Choose the plan that works best for you.</p>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const tabContainers = document.querySelectorAll('.tabs');
+      
+      tabContainers.forEach(container => {
+        const tabs = container.querySelectorAll('.tab');
+        const contentId = container.id.replace('tabs', 'tabContent');
+        const contentContainer = document.getElementById(contentId);
+        
+        tabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+            // Remove active class from all tabs
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            tab.classList.add('active');
+            
+            // Hide all panes
+            const panes = contentContainer.querySelectorAll('.tab-pane');
+            panes.forEach(pane => pane.classList.remove('active'));
+            
+            // Show selected pane
+            const targetPane = document.getElementById(tab.dataset.tab);
+            if (targetPane) targetPane.classList.add('active');
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>
