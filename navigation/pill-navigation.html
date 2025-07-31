@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pill Navigation</title>
+<style>
+  :root {
+    --primary: #4f46e5;
+    --primary-light: #eef2ff;
+    --text: #1f2937;
+    --text-light: #6b7280;
+    --bg: #ffffff;
+    --border: #e5e7eb;
+    --radius: 9999px;
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    --transition: all 0.2s ease;
+  }
+  
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #f9fafb;
+    padding: 2rem;
+  }
+  
+  .container { max-width: 1200px; margin: 0 auto; }
+  .section { margin-bottom: 2rem; }
+  h2 { margin-bottom: 1rem; }
+  p { color: var(--text-light); margin-bottom: 1rem; }
+  
+  /* Base Pill Nav */
+  .pill-nav {
+    display: flex;
+    gap: 0.5rem;
+    background: var(--bg);
+    padding: 0.5rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  
+  .pill-nav-link {
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--radius);
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+    white-space: nowrap;
+  }
+  
+  .pill-nav-link:hover { background: #f3f4f6; }
+  .pill-nav-link.active {
+    background: var(--primary);
+    color: white;
+  }
+  
+  /* Vertical Variant */
+  .pill-nav-vertical {
+    flex-direction: column;
+    max-width: 250px;
+  }
+  
+  /* Badge */
+  .badge {
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+  }
+  
+  .pill-nav-link.active .badge {
+    background: rgba(255,255,255,0.2);
+    color: white;
+  }
+  
+  @media (max-width: 768px) {
+    .pill-nav { overflow-x: auto; padding-bottom: 0.5rem; }
+    .pill-nav-vertical { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <section class="section">
+      <h2>Basic Pill Navigation</h2>
+      <div class="pill-nav">
+        <a href="#" class="pill-nav-link active">Overview</a>
+        <a href="#" class="pill-nav-link">Analytics</a>
+        <a href="#" class="pill-nav-link">Reports</a>
+        <a href="#" class="pill-nav-link">Settings</a>
+      </div>
+    </section>
+    
+    <section class="section">
+      <h2>With Badges</h2>
+      <div class="pill-nav">
+        <a href="#" class="pill-nav-link">
+          Inbox <span class="badge">12</span>
+        </a>
+        <a href="#" class="pill-nav-link active">
+          Starred <span class="badge">5</span>
+        </a>
+        <a href="#" class="pill-nav-link">
+          Drafts <span class="badge">3</span>
+        </a>
+      </div>
+    </section>
+    
+    <section class="section">
+      <h2>Vertical Navigation</h2>
+      <div class="pill-nav pill-nav-vertical">
+        <a href="#" class="pill-nav-link active">Profile</a>
+        <a href="#" class="pill-nav-link">Account</a>
+        <a href="#" class="pill-nav-link">Billing</a>
+        <a href="#" class="pill-nav-link">Notifications</a>
+      </div>
+    </section>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add click handlers for all pill nav links
+      document.querySelectorAll('.pill-nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const parentNav = link.closest('.pill-nav');
+          
+          // Remove active class from all links in this nav
+          parentNav.querySelectorAll('.pill-nav-link')
+            .forEach(l => l.classList.remove('active'));
+          
+          // Add active class to clicked link
+          link.classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
