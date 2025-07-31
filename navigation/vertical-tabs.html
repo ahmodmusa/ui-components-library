@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vertical Tabs Navigation</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --primary: #4f46e5;
+    --primary-light: #eef2ff;
+    --text: #1f2937;
+    --text-light: #6b7280;
+    --bg: #ffffff;
+    --border: #e5e7eb;
+    --radius: 0.5rem;
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    --transition: all 0.2s ease-in-out;
+  }
+  
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.5;
+    color: var(--text);
+    background-color: #f9fafb;
+    padding: 2rem;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .tabs-wrapper {
+    display: flex;
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    min-height: 400px;
+  }
+  
+  .tabs-nav {
+    width: 240px;
+    border-right: 1px solid var(--border);
+    background: #f9fafb;
+    padding: 1.5rem 0;
+  }
+  
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text);
+    font-weight: 500;
+    transition: var(--transition);
+    position: relative;
+  }
+  
+  .tab-btn:hover, .tab-btn.active {
+    background: var(--primary-light);
+    color: var(--primary);
+  }
+  
+  .tab-btn.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--primary);
+  }
+  
+  .tab-icon {
+    margin-right: 0.75rem;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  
+  .tab-content {
+    flex: 1;
+    padding: 2rem;
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .tab-content.active { display: block; }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @media (max-width: 768px) {
+    .tabs-wrapper { flex-direction: column; }
+    .tabs-nav {
+      width: 100%;
+      display: flex;
+      overflow-x: auto;
+      padding: 0;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+    }
+    .tab-btn {
+      padding: 1rem;
+      justify-content: center;
+      white-space: nowrap;
+    }
+    .tab-btn::before { display: none; }
+    .tab-btn.active {
+      border-bottom: 2px solid var(--primary);
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="tabs-wrapper">
+      <nav class="tabs-nav">
+        <button class="tab-btn active" data-tab="dashboard">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+          </svg>
+          Dashboard
+        </button>
+        <button class="tab-btn" data-tab="analytics">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+          </svg>
+          Analytics
+        </button>
+        <button class="tab-btn" data-tab="settings">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37 1 .608 2.296.07 2.572-1.065z"></path>
+            <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+          Settings
+        </button>
+      </nav>
+      
+      <div class="tab-content active" id="dashboard">
+        <h2>Dashboard Overview</h2>
+        <p>Welcome back! Here's what's happening with your projects today.</p>
+      </div>
+      
+      <div class="tab-content" id="analytics">
+        <h2>Analytics</h2>
+        <p>Track and analyze your data with our comprehensive analytics tools.</p>
+      </div>
+      
+      <div class="tab-content" id="settings">
+        <h2>Account Settings</h2>
+        <p>Manage your profile and account preferences.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      const tabContents = document.querySelectorAll('.tab-content');
+      
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Remove active class from all buttons and contents
+          tabBtns.forEach(b => b.classList.remove('active'));
+          tabContents.forEach(c => c.classList.remove('active'));
+          
+          // Add active class to clicked button
+          btn.classList.add('active');
+          
+          // Show corresponding content
+          const tabId = btn.getAttribute('data-tab');
+          document.getElementById(tabId).classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
