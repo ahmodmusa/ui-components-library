@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accordion Navigation</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.6;
+    color: #1f2937;
+    background: #f9fafb;
+    padding: 1rem;
+  }
+  .container { max-width: 800px; margin: 0 auto; }
+  h1 { margin: 1rem 0; text-align: center; }
+  
+  /* Accordion Styles */
+  .accordion { background: white; border-radius: 0.5rem; overflow: hidden; margin: 1rem 0; }
+  .accordion-item { border-bottom: 1px solid #e5e7eb; }
+  .accordion-item:last-child { border: none; }
+  
+  .accordion-header {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+  
+  .accordion-header:hover { background: #f9fafb; }
+  .accordion-header:focus { outline: none; background: #f3f4f6; }
+  
+  .accordion-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    transition: transform 0.3s ease;
+    color: #6b7280;
+  }
+  
+  .accordion-item.active .accordion-icon {
+    transform: rotate(180deg);
+    color: #4f46e5;
+  }
+  
+  .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background: #f9fafb;
+  }
+  
+  .accordion-item.active .accordion-content {
+    max-height: 1000px;
+    transition: max-height 0.5s ease-in;
+  }
+  
+  .accordion-body { padding: 0 1.25rem 1.25rem; }
+  
+  /* Links */
+  .nav-link {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #4b5563;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+    margin: 0.25rem 0;
+  }
+  
+  .nav-link:hover, .nav-link.active {
+    background: #eef2ff;
+    color: #4f46e5;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Accordion Navigation</h1>
+    
+    <div class="accordion">
+      <div class="accordion-item">
+        <button class="accordion-header">
+          Getting Started
+          <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-body">
+            <a href="#" class="nav-link">Introduction</a>
+            <a href="#" class="nav-link">Installation</a>
+            <a href="#" class="nav-link">Quick Start</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="accordion-item">
+        <button class="accordion-header">
+          Documentation
+          <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-body">
+            <a href="#" class="nav-link">API Reference</a>
+            <a href="#" class="nav-link">Guides</a>
+            <a href="#" class="nav-link">Examples</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="accordion-item">
+        <button class="accordion-header">
+          Support
+          <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-body">
+            <a href="#" class="nav-link">Contact Us</a>
+            <a href="#" class="nav-link">FAQs</a>
+            <a href="#" class="nav-link">Community</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const accordionItems = document.querySelectorAll('.accordion-item');
+      
+      accordionItems.forEach(item => {
+        const header = item.querySelector('.accordion-header');
+        
+        header.addEventListener('click', () => {
+          const isActive = item.classList.contains('active');
+          
+          // Close all items
+          accordionItems.forEach(i => i.classList.remove('active'));
+          
+          // Toggle current item if not active
+          if (!isActive) {
+            item.classList.add('active');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
