@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist Product Card</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 280px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .product-image {
+            position: relative;
+            padding-top: 100%;
+            overflow: hidden;
+            background: #f5f5f5;
+        }
+
+        .product-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .wishlist-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.2s ease;
+        }
+
+        .wishlist-btn:hover {
+            color: #ff4d4f;
+            transform: scale(1.1);
+        }
+
+        .product-content {
+            padding: 20px;
+        }
+
+        .category {
+            color: #888;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .product-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: #222;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: 600;
+            color: #222;
+            margin: 12px 0;
+        }
+
+        .original-price {
+            color: #999;
+            font-size: 14px;
+            text-decoration: line-through;
+            margin-left: 6px;
+            font-weight: 400;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .add-to-cart {
+            background: #222;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            flex-grow: 1;
+            transition: all 0.2s ease;
+        }
+
+        .add-to-cart:hover {
+            background: #333;
+        }
+
+        .view-details {
+            color: #666;
+            font-size: 12px;
+            text-decoration: none;
+            margin-left: 12px;
+            transition: color 0.2s ease;
+        }
+
+        .view-details:hover {
+            color: #222;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .product-card {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="product-card">
+        <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1608234805486-eb9e5d3e5a2e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Product Image">
+            <button class="wishlist-btn" aria-label="Add to wishlist">
+                <i class="far fa-heart"></i>
+            </button>
+        </div>
+        <div class="product-content">
+            <span class="category">Electronics</span>
+            <h3 class="product-title">Wireless Bluetooth Headphones with Noise Cancellation</h3>
+            <div class="price">$129.99 <span class="original-price">$159.99</span></div>
+            <div class="product-actions">
+                <button class="add-to-cart">Add to Cart</button>
+                <a href="#" class="view-details">View Details</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
