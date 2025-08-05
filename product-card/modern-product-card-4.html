@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Product Card 4</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+        body {
+            background-color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 18px;
+            width: 100%;
+            max-width: 320px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .product-header {
+            position: relative;
+            padding-top: 100%;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            overflow: hidden;
+        }
+
+        .product-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 30px;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: #3b82f6;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .product-actions {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(to top, rgba(0,0,0,0.1), transparent);
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover .product-actions {
+            transform: translateY(0);
+        }
+
+        .action-btn {
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #334155;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .action-btn:hover {
+            background: #3b82f6;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .product-content {
+            padding: 20px;
+            position: relative;
+        }
+
+        .category {
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .product-description {
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .price-container {
+            display: flex;
+            align-items: center;
+            margin: 16px 0;
+        }
+
+        .current-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+        }
+
+        .original-price {
+            color: #94a3b8;
+            font-size: 14px;
+            text-decoration: line-through;
+            margin-left: 8px;
+            font-weight: 500;
+        }
+
+        .discount {
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 10px;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            background: #f8fafc;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .stars {
+            color: #f59e0b;
+            margin-right: 4px;
+            letter-spacing: 1px;
+        }
+
+        .add-to-cart {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background: #1e293b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+        }
+
+        .stock-status {
+            display: flex;
+            align-items: center;
+            margin-top: 12px;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .stock-status i {
+            margin-right: 6px;
+            color: #22c55e;
+        }
+
+        @media (max-width: 480px) {
+            .product-card {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="product-card">
+        <div class="product-header">
+            <span class="product-badge">Best Seller</span>
+            <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                 alt="Wireless Earbuds" 
+                 class="product-image">
+            
+            <div class="product-actions">
+                <button class="action-btn" title="Add to Wishlist">
+                    <i class="far fa-heart"></i>
+                </button>
+                <button class="action-btn" title="Quick View">
+                    <i class="far fa-eye"></i>
+                </button>
+                <button class="action-btn" title="Add to Compare">
+                    <i class="fas fa-exchange-alt"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="product-content">
+            <span class="category">Audio</span>
+            <h3 class="product-title">Premium Wireless Earbuds Pro</h3>
+            <p class="product-description">Immersive sound with active noise cancellation and 30-hour battery life.</p>
+            
+            <div class="price-container">
+                <div class="current-price">
+                    $179.99
+                    <span class="original-price">$229.99</span>
+                    <span class="discount">22% OFF</span>
+                </div>
+            </div>
+
+            <div class="stock-status">
+                <i class="fas fa-check-circle"></i>
+                <span>In Stock (Only 5 left)</span>
+            </div>
+            
+            <div class="product-footer">
+                <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span>4.9 (328)</span>
+                </div>
+                <button class="add-to-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Add to Cart</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
