@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Mode Product Card</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+        .dark-card {
+            background: linear-gradient(135deg, #232526 80%, #414345 100%);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.35);
+            border: 1px solid #333;
+            max-width: 340px;
+            width: 100%;
+            overflow: hidden;
+            padding: 0 0 20px 0;
+            position: relative;
+            transition: box-shadow 0.3s;
+        }
+        .dark-card:hover {
+            box-shadow: 0 16px 40px 0 rgba(0,0,0,0.45);
+        }
+        .dark-image-container {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .dark-badge {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            background: #fff2;
+            color: #facc15;
+            padding: 6px 16px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(250,204,21,0.10);
+            z-index: 2;
+        }
+        .dark-image {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+            filter: drop-shadow(0 6px 18px rgba(250,204,21,0.08));
+            z-index: 1;
+        }
+        .dark-actions {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .dark-action-btn {
+            background: #232526;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #facc15;
+            font-size: 17px;
+            box-shadow: 0 2px 8px rgba(250,204,21,0.08);
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+        }
+        .dark-action-btn:hover {
+            background: #facc15;
+            color: #232526;
+            transform: translateY(-2px) scale(1.08);
+        }
+        .dark-content {
+            padding: 28px 24px 0 24px;
+        }
+        .dark-category {
+            color: #facc15;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            display: block;
+        }
+        .dark-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        .dark-description {
+            color: #d1d5db;
+            font-size: 14px;
+            margin-bottom: 18px;
+            line-height: 1.6;
+            min-height: 40px;
+        }
+        .dark-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 14px;
+        }
+        .dark-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #facc15;
+        }
+        .dark-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: #fff2;
+            padding: 4px 10px;
+            border-radius: 14px;
+            font-size: 13px;
+            color: #facc15;
+            font-weight: 600;
+        }
+        .dark-add-to-cart {
+            background: #facc15;
+            color: #232526;
+            border: none;
+            padding: 12px 26px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s, transform 0.2s;
+            box-shadow: 0 2px 8px rgba(250,204,21,0.10);
+        }
+        .dark-add-to-cart:hover {
+            background: #fde68a;
+            color: #232526;
+            transform: translateY(-2px) scale(1.05);
+        }
+        @media (max-width: 480px) {
+            .dark-card {
+                max-width: 100%;
+            }
+            .dark-content {
+                padding: 18px 8px 0 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dark-card">
+        <div class="dark-image-container">
+            <span class="dark-badge">Night Edition</span>
+            <div class="dark-actions">
+                <button class="dark-action-btn" title="Wishlist">
+                    <i class="far fa-heart"></i>
+                </button>
+                <button class="dark-action-btn" title="Quick View">
+                    <i class="far fa-eye"></i>
+                </button>
+                <button class="dark-action-btn" title="Share">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+            </div>
+            <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80" alt="Dark Mode Product" class="dark-image">
+        </div>
+        <div class="dark-content">
+            <span class="dark-category">Tech Gadgets</span>
+            <h3 class="dark-title">Night Vision Camera</h3>
+            <p class="dark-description">Capture the night in stunning clarity with our advanced night vision camera, built for low-light performance.</p>
+            <div class="dark-footer">
+                <span class="dark-price">$299.00</span>
+                <span class="dark-rating"><i class="fas fa-star"></i> 4.7</span>
+            </div>
+            <button class="dark-add-to-cart">
+                <i class="fas fa-shopping-cart"></i>
+                Add to Cart
+            </button>
+        </div>
+    </div>
+</body>
+</html>
