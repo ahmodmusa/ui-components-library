@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Mega Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Header Styles */
+        .header {
+            background: #ffffff;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .top-bar {
+            background: #f8f9fa;
+            padding: 0.5rem 5%;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-links a {
+            color: #666;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .top-links a:hover {
+            color: #4a90e2;
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: #fff;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c3e50;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            color: #4a90e2;
+            margin-right: 0.5rem;
+        }
+
+        .search-bar {
+            flex: 0.6;
+            display: flex;
+            margin: 0 2rem;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-bar button {
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background: #357abd;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .header-icons a {
+            color: #2c3e50;
+            text-decoration: none;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .header-icons i {
+            font-size: 1.5rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+
+        /* Mega Menu */
+        .mega-menu {
+            background: #2c3e50;
+            padding: 0 5%;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .mega-menu ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .mega-menu > ul > li {
+            position: relative;
+            margin: 0;
+        }
+
+        .mega-menu > ul > li > a {
+            color: white;
+            text-decoration: none;
+            padding: 1.2rem 1.8rem;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+
+        .mega-menu > ul > li > a i {
+            margin-left: 8px;
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .mega-menu > ul > li:hover > a {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mega-menu > ul > li > a:hover i {
+            transform: translateY(2px);
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: absolute;
+            left: 0;
+            top: 100%;
+            background: white;
+            min-width: 240px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(15px);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 1001;
+            border-radius: 0 0 6px 6px;
+            overflow: hidden;
+            border-top: 3px solid #4a90e2;
+        }
+
+        .mega-menu > ul > li:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown li {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: background 0.2s ease;
+        }
+
+        .dropdown li:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown li a {
+            padding: 0.9rem 1.8rem;
+            display: block;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            font-size: 0.95rem;
+            color: #2c3e50;
+        }
+
+        .dropdown li a:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: #4a90e2;
+            transform: scaleY(0);
+            transform-origin: center;
+            transition: transform 0.2s ease;
+        }
+
+        .dropdown li a:hover {
+            background: #f8f9fa;
+            padding-left: 2.2rem;
+            color: #4a90e2;
+        }
+
+        .dropdown li a:hover:before {
+            transform: scaleY(1);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 1200px) {
+            .search-bar {
+                flex: 0.8;
+            }
+        }
+
+        @media screen and (max-width: 1200px) {
+            .mega-menu > ul > li > a {
+                padding: 1.2rem 1.3rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media screen and (max-width: 992px) {
+            .top-bar {
+                display: none;
+            }
+            
+            .main-header {
+                padding: 0.8rem 1rem;
+                position: relative;
+                z-index: 1002;
+                background: #fff;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .search-bar {
+                position: fixed;
+                top: 70px;
+                left: 1rem;
+                right: 1rem;
+                margin: 0;
+                z-index: 1000;
+                display: none;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                border-radius: 6px;
+            }
+
+            .search-bar.active {
+                display: flex;
+                animation: slideDown 0.3s ease-out;
+            }
+
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                background: #f8f9fa;
+                border-radius: 6px;
+                transition: all 0.3s ease;
+            }
+
+            .mobile-menu-btn:hover {
+                background: #e9ecef;
+            }
+
+            .header-icons {
+                display: none;
+            }
+
+            .mega-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 300px;
+                max-width: 85%;
+                height: calc(100vh - 70px);
+                overflow-y: auto;
+                transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .mega-menu.active {
+                left: 0;
+            }
+
+            .mega-menu > ul {
+                flex-direction: column;
+                padding: 0.5rem 0;
+            }
+
+            .mega-menu > ul > li > a {
+                padding: 1.1rem 1.5rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .dropdown {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                display: none;
+                background: rgba(0, 0, 0, 0.15);
+                border-radius: 0;
+                border: none;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease, padding 0.3s ease;
+            }
+
+            .dropdown.active {
+                display: block;
+                max-height: 1000px;
+                padding: 0.5rem 0;
+            }
+
+            .dropdown li a {
+                color: #ecf0f1;
+                padding: 0.8rem 1.5rem 0.8rem 2.5rem;
+                font-size: 0.9rem;
+                opacity: 0.9;
+            }
+
+            .dropdown li a:hover {
+                background: rgba(255, 255, 255, 0.1);
+                padding-left: 2.8rem;
+            }
+
+            .dropdown li a:before {
+                display: none;
+            }
+        }
+
+        /* Demo Content */
+        .content {
+            margin-top: 250px;
+            padding: 2rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- E-commerce Mega Menu -->
+    <header class="header">
+        <div class="top-bar">
+            <div class="top-links">
+                <a href="#"><i class="fas fa-phone"></i> +1 234 567 890</a>
+                <a href="#"><i class="fas fa-envelope"></i> info@example.com</a>
+            </div>
+            <div class="top-links">
+                <a href="#">Track Order</a>
+                <a href="#">Wishlist</a>
+                <a href="#">My Account</a>
+            </div>
+        </div>
+
+        <div class="main-header">
+            <div class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <a href="#" class="logo">
+                <i class="fas fa-shopping-bag"></i>
+                ShopEase
+            </a>
+            
+            <div class="search-bar" id="searchBar">
+                <input type="text" placeholder="Search for products...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="header-icons">
+                <a href="#">
+                    <i class="far fa-user"></i>
+                    <span>Account</span>
+                </a>
+                <a href="#">
+                    <i class="far fa-heart"></i>
+                    <span>Wishlist</span>
+                    <span class="cart-count">3</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Cart</span>
+                    <span class="cart-count">5</span>
+                </a>
+            </div>
+            
+            <div class="mobile-menu-btn" id="searchBtn">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+
+        <nav class="mega-menu" id="megaMenu">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li>
+                    <a href="#">Categories <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown">
+                        <li><a href="#">Electronics</a></li>
+                        <li><a href="#">Fashion</a></li>
+                        <li><a href="#">Home & Garden</a></li>
+                        <li><a href="#">Beauty</a></li>
+                        <li><a href="#">Sports</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Deals</a></li>
+                <li><a href="#">New Arrivals</a></li>
+                <li><a href="#">Brands</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Demo Content -->
+    <div class="content">
+        <h1>E-commerce Mega Menu</h1>
+        <p>Resize your browser window to see the responsive menu in action.</p>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const megaMenu = document.getElementById('megaMenu');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchBar = document.getElementById('searchBar');
+        const dropdowns = document.querySelectorAll('.mega-menu > ul > li');
+
+        // Toggle mobile menu
+        mobileMenuBtn.addEventListener('click', () => {
+            megaMenu.classList.toggle('active');
+            searchBar.classList.remove('active');
+        });
+
+        // Toggle search bar on mobile
+        searchBtn.addEventListener('click', () => {
+            searchBar.classList.toggle('active');
+            megaMenu.classList.remove('active');
+        });
+
+        // Toggle dropdowns on mobile
+        if (window.innerWidth <= 992) {
+            dropdowns.forEach(item => {
+                const link = item.querySelector('a');
+                const dropdown = item.querySelector('.dropdown');
+                
+                if (dropdown) {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        dropdown.classList.toggle('active');
+                    });
+                }
+            });
+        }
+
+        // Update dropdown behavior on window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 992) {
+                megaMenu.classList.remove('active');
+                searchBar.classList.remove('active');
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
